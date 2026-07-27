@@ -1,0 +1,13 @@
+# Environment secrets
+.env
+
+# Python cache & virtualenv
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Generated audio outputs
+output.mp3
+recording.wav
+*.webm
