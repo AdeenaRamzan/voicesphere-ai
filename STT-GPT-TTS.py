@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Groq API Key
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 VOICE_ID = "onwK4e9ZLuTAKqWW03F9"
 
 # Audio and voice activity configuration

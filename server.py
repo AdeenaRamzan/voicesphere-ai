@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GROQ_CHAT_MODEL = "llama-3.3-70b-versatile"
 GROQ_WHISPER_MODEL = "whisper-large-v3"
 
