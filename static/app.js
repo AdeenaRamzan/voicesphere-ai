@@ -67,12 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Spacebar Key Trigger
     document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' && document.activeElement !== textInput) {
-            e.preventDefault();
-            if (isRecording) {
-                stopRecording();
-            } else {
-                startRecording();
+        if (e.code === 'Space') {
+            const target = e.target;
+            const activeEl = document.activeElement;
+            const isTyping = 
+                target.tagName === 'INPUT' || 
+                target.tagName === 'TEXTAREA' ||
+                target.isContentEditable ||
+                (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) ||
+                target.closest('#voicesphere-widget-host');
+
+            if (!isTyping) {
+                e.preventDefault();
+                if (isRecording) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
             }
         }
     });
@@ -162,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const transcribeData = await transcribeRes.json();
             const userText = transcribeData.text.trim();
+            const detectedLanguage = transcribeData.language || 'english';
+            const ttsCode = transcribeData.tts_code || 'en';
 
             if (!userText) {
                 setStatus('ready', 'Ready');
@@ -172,13 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Append user message to chat feed
             appendChatMessage('user', userText);
             updateCaptions(`"${userText}"`, 'USER PROMPT', 'User');
+            if (detectedLanguage !== 'english') {
+                updateCaptions(`"${userText}" (detected: ${detectedLanguage})`, 'USER PROMPT', 'User');
+            }
 
-            // 2. Chat Completion with Groq Llama 3.3
+            // 2. Chat Completion with Groq Llama 3.3 (replies in the detected language)
             setStatus('processing', 'Thinking...');
             const chatRes = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userText })
+                body: JSON.stringify({ message: userText, language: detectedLanguage })
             });
 
             if (!chatRes.ok) {
@@ -192,9 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Append assistant reply to chat feed
             appendChatMessage('assistant', aiReply);
 
-            // 3. Text to Speech Response
+            // 3. Text to Speech Response (voice matches the detected language)
             setStatus('speaking', 'Speaking...');
-            await playTTSResponse(aiReply);
+            await playTTSResponse(aiReply, ttsCode);
 
         } catch (err) {
             console.error('Processing error:', err);
@@ -204,12 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Play Voice Response and Stream Typewriter Captions
-    async function playTTSResponse(text) {
+    async function playTTSResponse(text, langCode) {
         try {
             const ttsRes = await fetch('/api/tts', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: text })
+                body: JSON.stringify({ text: text, lang: langCode || 'en' })
             });
 
             if (!ttsRes.ok) throw new Error('TTS failed');
@@ -353,8 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const barHeight = (dataArray[i] / 255) * canvas.height * 0.85;
             
             const gradient = canvasCtx.createLinearGradient(0, canvas.height, 0, 0);
-            gradient.addColorStop(0, '#00f2fe');
-            gradient.addColorStop(1, '#ff0844');
+            gradient.addColorStop(0, '#4f46e5');
+            gradient.addColorStop(1, '#818cf8');
 
             canvasCtx.fillStyle = gradient;
             canvasCtx.fillRect(x, canvas.height - barHeight, barWidth - 3, barHeight);
@@ -371,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const time = Date.now() * 0.003;
         canvasCtx.beginPath();
         canvasCtx.lineWidth = 3;
-        canvasCtx.strokeStyle = '#4facfe';
+        canvasCtx.strokeStyle = '#4f46e5';
 
         for (let x = 0; x < canvas.width; x += 5) {
             const y = canvas.height / 2 + Math.sin(x * 0.02 + time) * 25 * Math.cos(x * 0.005);
@@ -386,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
         canvasCtx.beginPath();
         canvasCtx.lineWidth = 1.5;
-        canvasCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        canvasCtx.strokeStyle = 'rgba(15, 23, 42, 0.10)';
         canvasCtx.moveTo(0, canvas.height / 2);
         canvasCtx.lineTo(canvas.width, canvas.height / 2);
         canvasCtx.stroke();

@@ -23,12 +23,15 @@
 
 - ⚡ **Ultra-Fast Speech Transcription**: Uses Groq's **Whisper Large v3** model for instantaneous, high-accuracy voice-to-text.
 - 🧠 **Smart AI Conversations**: Powered by **Llama 3.3 70B Versatile** on Groq's LPU acceleration engine.
+- 🌍 **Zero-Config Multi-Language Auto-Pipeline**: Speak in any language Whisper supports; the system auto-detects it, instructs the LLM to reply in the user's native tongue, and synthesizes Text-to-Speech back using the matching native voice.
+- 🧩 **Embeddable Shadow DOM Widget**: A self-contained, floating voice/text assistant widget that can be integrated onto any host site with a single `<script>` tag, completely isolated from host CSS clashes.
 - 📝 **Live Captions Banner**: Real-time speech subtitles while you talk, followed by animated typewriter captions when the AI responds.
 - 🌊 **Interactive Soundwave Visualizer**: HTML5 Canvas rendering dynamic audio frequency spectrums for microphone input & speech output.
 - 🔊 **Seamless Background Audio Playback**: Zero-popup HTML5 Audio streaming & background PyAudio/pygame playback for terminal mode.
 - 🚀 **1-Click Cloud Deployment**: Pre-configured for **Vercel**, **Hugging Face Spaces**, **Render**, and **Docker**.
 
 ---
+
 
 ## 🏗️ System Architecture
 
@@ -121,9 +124,38 @@ docker run -p 8000:8000 -e GROQ_API_KEY="YOUR_GROQ_API_KEY_HERE" voicesphere-ai
 
 | Method | Endpoint | Description | Payload / Query |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/api/transcribe` | Transcribes voice audio file | `multipart/form-data` (audio blob) |
-| `POST` | `/api/chat` | Generates AI text response | `{"message": "Hello"}` |
-| `POST` | `/api/tts` | Converts text into MP3 audio stream | `{"text": "Response text"}` |
+| `POST` | `/api/transcribe` | Transcribes audio, auto-detects language | `multipart/form-data` (audio blob) + optional `language` field to force one |
+| `POST` | `/api/chat` | Generates AI text response, in the detected language | `{"message": "Hello", "language": "spanish"}` |
+| `POST` | `/api/tts` | Converts text into MP3 audio in the matching voice | `{"text": "Response text", "lang": "es"}` |
+| `GET` | `/widget.js` | Embeddable voice widget script | none |
+
+---
+
+## 🌍 Multi-Language Support
+
+Speak in any language Whisper supports. `/api/transcribe` returns the detected
+language alongside the text; the frontend feeds that straight into `/api/chat`
+(so the AI replies in the same language) and `/api/tts` (so the voice matches).
+No language picker needed, it's automatic. To force a specific input language
+instead, pass a `language` form field (ISO-639-1 code) to `/api/transcribe`.
+
+## 🧩 Embeddable Widget
+
+Any website can add a floating voice/chat assistant with one script tag:
+
+```html
+<script src="https://your-domain.com/widget.js"
+        data-agent-name="Ava"
+        data-color="#4f46e5"
+        data-greeting="Hi! Ask me anything."
+        data-position="bottom-right"></script>
+```
+
+It runs inside a Shadow DOM, so it's fully style-isolated and won't clash
+with the host site's CSS. It talks to the same backend, so language
+detection carries through automatically. See `static/widget-demo.html`
+for a working example (open `/static/widget-demo.html` once the server
+is running).
 
 ---
 
