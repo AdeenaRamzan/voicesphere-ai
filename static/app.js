@@ -369,8 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const barHeight = (dataArray[i] / 255) * canvas.height * 0.85;
             
             const gradient = canvasCtx.createLinearGradient(0, canvas.height, 0, 0);
-            gradient.addColorStop(0, '#4f46e5');
-            gradient.addColorStop(1, '#818cf8');
+            gradient.addColorStop(0, '#18181b');
+            gradient.addColorStop(1, '#71717a');
 
             canvasCtx.fillStyle = gradient;
             canvasCtx.fillRect(x, canvas.height - barHeight, barWidth - 3, barHeight);
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const time = Date.now() * 0.003;
         canvasCtx.beginPath();
         canvasCtx.lineWidth = 3;
-        canvasCtx.strokeStyle = '#4f46e5';
+        canvasCtx.strokeStyle = '#18181b';
 
         for (let x = 0; x < canvas.width; x += 5) {
             const y = canvas.height / 2 + Math.sin(x * 0.02 + time) * 25 * Math.cos(x * 0.005);

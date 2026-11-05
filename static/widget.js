@@ -21,7 +21,7 @@
   var API_BASE = scriptTag.getAttribute('data-api-base') || new URL(scriptTag.src).origin;
   var AGENT_NAME = scriptTag.getAttribute('data-agent-name') || 'VoiceSphere';
   var GREETING = scriptTag.getAttribute('data-greeting') || "Hi! Click the mic or type a message.";
-  var ACCENT = scriptTag.getAttribute('data-color') || '#4f46e5';
+  var ACCENT = scriptTag.getAttribute('data-color') || '#18181b';
   var POSITION = scriptTag.getAttribute('data-position') || 'bottom-right'; // bottom-right | bottom-left
 
   var host = document.createElement('div');
@@ -36,28 +36,28 @@
     ':host { all: initial; }' +
     '* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
     '.vs-launcher { position: fixed; bottom: 24px; ' + side + ': 24px; width: 60px; height: 60px; border-radius: 50%; ' +
-      'background: ' + ACCENT + '; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: none; cursor: pointer; ' +
+      'background: ' + ACCENT + '; box-shadow: 0 6px 20px rgba(0,0,0,0.18); border: none; cursor: pointer; ' +
       'display: flex; align-items: center; justify-content: center; z-index: 999999; transition: transform 0.15s ease; }' +
     '.vs-launcher:hover { transform: scale(1.06); }' +
     '.vs-panel { position: fixed; bottom: 96px; ' + side + ': 24px; width: 340px; max-width: calc(100vw - 32px); height: 480px; ' +
-      'background: #0f1220; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.35); display: none; flex-direction: column; ' +
-      'overflow: hidden; z-index: 999999; border: 1px solid rgba(255,255,255,0.08); }' +
+      'background: #ffffff; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.12); display: none; flex-direction: column; ' +
+      'overflow: hidden; z-index: 999999; border: 1px solid #e4e4e7; }' +
     '.vs-panel.open { display: flex; }' +
     '.vs-header { background: ' + ACCENT + '; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }' +
     '.vs-header-title { font-size: 14px; font-weight: 600; }' +
     '.vs-header-sub { font-size: 11px; opacity: 0.85; }' +
     '.vs-close { background: transparent; border: none; color: #fff; cursor: pointer; font-size: 18px; line-height: 1; padding: 4px; }' +
-    '.vs-feed { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }' +
-    '.vs-bubble { max-width: 85%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; color: #e7e9f5; }' +
+    '.vs-feed { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: #ffffff; }' +
+    '.vs-bubble { max-width: 85%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; }' +
     '.vs-bubble.user { align-self: flex-end; background: ' + ACCENT + '; color: #fff; border-bottom-right-radius: 3px; }' +
-    '.vs-bubble.assistant { align-self: flex-start; background: rgba(255,255,255,0.08); border-bottom-left-radius: 3px; }' +
-    '.vs-status { font-size: 11px; color: #9aa0b4; padding: 0 14px 6px; min-height: 14px; }' +
-    '.vs-inputbar { display: flex; gap: 8px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.08); }' +
-    '.vs-text-input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; ' +
-      'padding: 9px 14px; color: #fff; font-size: 13px; outline: none; }' +
+    '.vs-bubble.assistant { align-self: flex-start; background: #f4f4f5; color: #09090b; border: 1px solid #e4e4e7; border-bottom-left-radius: 3px; }' +
+    '.vs-status { font-size: 11px; color: #71717a; padding: 0 14px 6px; min-height: 14px; background: #ffffff; }' +
+    '.vs-inputbar { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #e4e4e7; background: #ffffff; }' +
+    '.vs-text-input { flex: 1; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 20px; ' +
+      'padding: 9px 14px; color: #09090b; font-size: 13px; outline: none; }' +
     '.vs-mic-btn, .vs-send-btn { width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer; ' +
       'display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: ' + ACCENT + '; color: #fff; }' +
-    '.vs-mic-btn.recording { background: #ef4444; animation: vs-pulse 1s infinite; }' +
+    '.vs-mic-btn.recording { background: #09090b; animation: vs-pulse 1s infinite; }' +
     '@keyframes vs-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }' +
     '</style>' +
     '<button class="vs-launcher" id="vsLauncher" aria-label="Open voice assistant">' +
