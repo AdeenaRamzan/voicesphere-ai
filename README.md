@@ -12,7 +12,7 @@
 <br/>
 
 <p align="center">
-  <img src="static/og-image.png" alt="VoiceSphere AI Social Preview" width="100%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+  <img src="static/og-image.png?v=2" alt="VoiceSphere AI Social Preview" width="100%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
 </p>
 
 <p align="center">
