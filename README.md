@@ -9,6 +9,12 @@
 [![Vercel Ready](https://img.shields.io/badge/Vercel-100%25_Ready-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
+<br/>
+
+<p align="center">
+  <img src="static/og-image.png" alt="VoiceSphere AI Social Preview" width="100%" style="max-width: 800px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+</p>
+
 <p align="center">
   A high-performance, real-time AI voice assistant featuring ultra-fast speech recognition, live captions, interactive audio waveform visualizer, and streaming text-to-speech response.
 </p>

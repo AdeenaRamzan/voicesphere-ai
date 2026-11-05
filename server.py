@@ -3,7 +3,7 @@ import io
 import requests
 from typing import Optional
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse
+from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -146,6 +146,16 @@ async def text_to_speech(request: TTSRequest):
         return StreamingResponse(mp3_fp, media_type="audio/mpeg")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"gTTS error: {str(e)}")
+
+@app.get("/og-image.png")
+async def get_og_image():
+    """Serves the Open Graph preview image (1200x630) for social platforms."""
+    return FileResponse("static/og-image.png", media_type="image/png")
+
+@app.get("/opengraph-image.png")
+async def get_opengraph_image():
+    """Serves the Open Graph preview image (1200x630) for social platforms."""
+    return FileResponse("static/og-image.png", media_type="image/png")
 
 @app.get("/widget.js")
 async def get_widget_script():

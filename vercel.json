@@ -15,6 +15,18 @@
       "dest": "api/index.py"
     },
     {
+      "src": "/og-image.png",
+      "dest": "/static/og-image.png"
+    },
+    {
+      "src": "/opengraph-image.png",
+      "dest": "/static/og-image.png"
+    },
+    {
+      "src": "/widget.js",
+      "dest": "/static/widget.js"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },
